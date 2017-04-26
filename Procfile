@@ -1,1 +1,1 @@
-web: gunicorn controleonibusdasdsad.wsgi --log-file -
+web: gunicorn controleonibus.wsgi --log-file -
