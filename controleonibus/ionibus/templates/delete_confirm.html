@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="alert alert-info" role="alert"><b>Excluir Registro</b></div>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <h3>Tem certeza?</h3>
+
+        <p>Tem certeza de que deseja apagar o {{ opcao }} selecionado? Todos os seguintes dados e seus itens relacionados serão removidos:</p>
+
+        <p><b>Resumo:</b></p>
+
+        <!--Resumo Eventos-->
+        {% if opcao == 'Eventos' %}
+        <ul>
+                {% if object.tipo == 'AC' %}
+                    <li>Evento: Assembleia de Circuito</li>
+                {% endif %}
+
+                {% if object.tipo == 'AE' %}
+                    <li>Evento: Assembleia Especial</li>
+                {% endif %}
+
+                {% if object.tipo == 'CR' %}
+                    <li>Evento: Congresso Regional</li>
+                {% endif %}
+                <li>Circuito: {{ object.circuito }}</li>
+                <li>Parte: {{ object.parte }}</li>
+                <li>Data do Evento: {{ object.data_evento }}</li>
+                <li>Texto Base: {{ object.texto_base }}</li>
+
+        </ul>
+        {% endif %}
+
+        <!--Resumo Eventos-->
+        {% if opcao == 'Congregacao' %}
+        <ul>
+                <li>Nome: {{ object.nome}}</li>
+                <li>Coordenador: {{ object.coordenador }}</li>
+                <li>Tel. Coordenador: {{ object.tel_coordenador }}</li>
+                <li>E-mail Coordenador: {{ object.email_coordenador }}</li>
+
+        </ul>
+        {% endif %}
+
+        <br/>
+
+        <button type="submit" class="btn btn-danger" style="width:170px">
+            <!--<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>-->
+            <h5>Sim, tenho certeza</h5>
+        </button>
+
+        <a class="btn btn-success" href="{% url 'ionibus:congregacao_consulta' %}" style="width:170px">
+            <!--<span class="glyphicon glyphicon-arrow" aria-hidden="true"></span>-->
+            <h5>Não, me leve de volta </h5>
+        </a>
+    </form>
+{% endblock %}

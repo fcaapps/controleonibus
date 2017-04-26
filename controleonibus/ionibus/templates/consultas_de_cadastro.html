@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block content %}
+    <!--Consulta de Eventos-->
+    {% if opcao == 'Eventos' %}
+        <div class="alert alert-info" role="alert"><strong>>> Consulta Eventos</strong></div>
+
+        <table class="table table-condensed">
+            <tr class="info">
+                <td><b>Tipo</b></td>
+                <td><b>Circuito</b></td>
+                <td><b>Parte</b></td>
+                <td><b>Data do Evento</b></td>
+                <td><b>Texto Base</b></td>
+                <td><b>Alterar</b></td>
+                <td><b>Excluir</b></td>
+            </tr>
+
+            {% for evento in eventos %}
+                <tr>
+                    {% if evento.tipo == 'AC' %}
+                        <td style="vertical-align:middle">Assembleia de Circuito</td>
+                    {% endif %}
+
+                    {% if evento.tipo == 'AE' %}
+                        <td style="vertical-align:middle">Assembleia Especial</td>
+                    {% endif %}
+
+                    {% if evento.tipo == 'CR' %}
+                        <td style="vertical-align:middle">Congresso Regional</td>
+                    {% endif %}
+
+                    <td style="vertical-align:middle">{{evento.circuito}}</td>
+                    <td style="vertical-align:middle">{{evento.parte}}</td>
+                    <td style="vertical-align:middle">{{evento.data_evento}}</td>
+                    <td style="vertical-align:middle">{{evento.texto_base}}</td>
+
+                    <td style="vertical-align:middle">
+                        <a class="btn btn-success" href="{% url 'ionibus:eventos_update' evento.id %}">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                    <td style="vertical-align:middle">
+                        <a class="btn btn-danger" href="{% url 'ionibus:eventos_delete' evento.id %}">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+        </table>
+
+        <div class="row">
+            <div class="col-md-8">
+               <a class="btn btn-info" href="{% url 'ionibus:eventos_cadastro'%}" style="width:150px">
+                  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                  Voltar
+               </a>
+            </div>
+        </div>
+
+    {% endif %}
+
+    {% if opcao == 'Congregacao' %}
+        <div class="alert alert-info" role="alert"><strong>>> Consulta Congregação</strong></div>
+
+        <table class="table table-condensed">
+            <tr class="info">
+                <td><b>Congregação</b></td>
+                <td><b>Coordenador</b></td>
+                <td><b>Tel. Coordenador</b></td>
+                <td><b>E-mail do Coordenador</b></td>
+                <td><b>Alterar</b></td>
+                <td><b>Excluir</b></td>
+            </tr>
+
+            {% for congrega in congregacao %}
+                <tr>
+                    <td style="vertical-align:middle">{{congrega.nome}}</td>
+                    <td style="vertical-align:middle">{{congrega.coordenador}}</td>
+                    <td style="vertical-align:middle">{{congrega.tel_coordenador}}</td>
+                    <td style="vertical-align:middle">{{congrega.email_coordenador}}</td>
+
+                    <td style="vertical-align:middle">
+                        <a class="btn btn-success" href="{% url 'ionibus:congregacao_update' congrega.id %}">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                    <td style="vertical-align:middle">
+                        <a class="btn btn-danger" href="{% url 'ionibus:congregacao_delete' congrega.id %}">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+        </table>
+
+        <div class="row">
+            <div class="col-md-8">
+               <a class="btn btn-info" href="{% url 'ionibus:congregacao_cadastro'%}" style="width:150px">
+                  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                  Voltar
+               </a>
+            </div>
+        </div>
+
+    {% endif %}
+
+    <br/>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% block content %}
+    {% if opcao == 'Eventos' %}
+        <div class="alert alert-info" role="alert"><strong>>> Alterar Eventos</strong></div>
+        <form method="post">
+            {% csrf_token %}
+            {{form | bootstrap}}
+          <div align="left">
+              <button type="submit" class="btn btn-primary" style="width:150px">
+                  <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                  Gravar
+              </button>
+              <a class="btn btn-info" href="{% url 'ionibus:eventos_consulta'%}" style="width:150px">
+                  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                  Voltar
+              </a>
+          </div>
+        </form>
+    {% endif %}
+
+    {% if opcao == 'Congregacao' %}
+        <div class="alert alert-info" role="alert"><strong>>> Alterar Congregação</strong></div>
+        <form method="post">
+            {% csrf_token %}
+            {{form | bootstrap}}
+          <div align="left">
+              <button type="submit" class="btn btn-primary" style="width:150px">
+                  <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                  Gravar
+              </button>
+              <a class="btn btn-info" href="{% url 'ionibus:congregacao_consulta'%}" style="width:150px">
+                  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                  Voltar
+              </a>
+          </div>
+        </form>
+    {% endif %}
+
+    <br/>
+{% endblock %}
