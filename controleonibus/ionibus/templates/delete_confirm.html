@@ -31,9 +31,20 @@
                 <li>Texto Base: {{ object.texto_base }}</li>
 
         </ul>
+
+        <button type="submit" class="btn btn-danger" style="width:170px">
+            <!--<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>-->
+            <h5>Sim, tenho certeza</h5>
+        </button>
+
+        <a class="btn btn-success" href="{% url 'ionibus:eventos_consulta' %}" style="width:170px">
+            <!--<span class="glyphicon glyphicon-arrow" aria-hidden="true"></span>-->
+            <h5>Não, me leve de volta </h5>
+        </a>
+
         {% endif %}
 
-        <!--Resumo Eventos-->
+        <!--Resumo Congregação-->
         {% if opcao == 'Congregacao' %}
         <ul>
                 <li>Nome: {{ object.nome}}</li>
@@ -42,9 +53,6 @@
                 <li>E-mail Coordenador: {{ object.email_coordenador }}</li>
 
         </ul>
-        {% endif %}
-
-        <br/>
 
         <button type="submit" class="btn btn-danger" style="width:170px">
             <!--<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>-->
@@ -55,5 +63,10 @@
             <!--<span class="glyphicon glyphicon-arrow" aria-hidden="true"></span>-->
             <h5>Não, me leve de volta </h5>
         </a>
+
+        {% endif %}
+
+        <br/>
+
     </form>
 {% endblock %}
