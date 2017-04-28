@@ -5,19 +5,23 @@ from controleonibus.ionibus.models import Congregacao
 from controleonibus.ionibus.forms import EventosForm
 from controleonibus.ionibus.forms import CongregacaoForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 
 # def home(request):
 #     return render(request, 'home.html')
 
 # Chama Tela Principal
+@login_required
 def painel(request):
     return render(request, 'painel.html')
 
 # Chama Tela de Contatos
+@login_required
 def contatos(request):
     return render(request, 'contatos.html')
 
 # Cadastro de Eventos
+@login_required
 def eventos_cadastro(request):
     form = EventosForm(request.POST or None)
 
@@ -34,6 +38,7 @@ def eventos_cadastro(request):
     return render(request, 'cadastros.html', context)
 
 # Altera Eventos
+@login_required
 def eventos_update(request,pk):
     evento = Eventos.objects.get(pk=pk)
     form = EventosForm(request.POST or None, instance=evento)
@@ -51,6 +56,7 @@ def eventos_update(request,pk):
     return render(request, 'updates.html', context)
 
 # Deleta Eventos
+@login_required
 def eventos_delete(request, pk):
     evento = Eventos.objects.get(pk=pk)
 
@@ -66,6 +72,7 @@ def eventos_delete(request, pk):
     return render(request, 'delete_confirm.html', context)
 
 # Consulta Eventos com Paginador
+@login_required
 def eventos_consulta(request):
     evento_lista = Eventos.objects.all()
     paginator = Paginator(evento_lista, 100)  # Show 25 contacts per page
@@ -90,6 +97,7 @@ def eventos_consulta(request):
     return render(request, 'consultas_de_cadastro.html', context)
 
 # Cadastro de Congregação
+@login_required
 def congregacao_cadastro(request):
     form = CongregacaoForm(request.POST or None)
 
@@ -106,6 +114,7 @@ def congregacao_cadastro(request):
     return render(request, 'cadastros.html', context)
 
 # Altera Congregação
+@login_required
 def congregacao_update(request,pk):
     congregacao = Congregacao.objects.get(pk=pk)
     form = CongregacaoForm(request.POST or None, instance=congregacao)
@@ -123,6 +132,7 @@ def congregacao_update(request,pk):
     return render(request, 'updates.html', context)
 
 # Deleta Eventos
+@login_required
 def congregacao_delete(request, pk):
     congregacao = Congregacao.objects.get(pk=pk)
 
@@ -138,6 +148,7 @@ def congregacao_delete(request, pk):
     return render(request, 'delete_confirm.html', context)
 
 # Consulta Eventos com Paginador
+@login_required
 def congregacao_consulta(request):
     congregacao_lista = Congregacao.objects.all()
     paginator = Paginator(congregacao_lista, 100)  # Show 25 contacts per page
@@ -163,13 +174,16 @@ def congregacao_consulta(request):
 
 
 # Cadastro de Responsáveis
+@login_required
 def responsaveis(request):
     return render(request, 'responsaveis.html')
 
 # Cadastro de Capitães
+@login_required
 def capitaes(request):
     return render(request, 'capitaes.html')
 
 # Cadastro de Passageiros
+@login_required
 def passageiros(request):
     return render(request, 'passageiros.html')

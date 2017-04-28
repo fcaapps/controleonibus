@@ -4,7 +4,7 @@ from controleonibus.ionibus import views
 
 urlpatterns = [
     # Tela Principal
-    url(r'^$', views.painel, name="painel"),
+    url(r'^painel/$', views.painel, name="painel"),
     # Telas de Cadastro
     url(r'^cadastro_eventos/$', views.eventos_cadastro, name="eventos_cadastro"),
     url(r'^cadastro_congregacao/$', views.congregacao_cadastro, name="congregacao_cadastro"),

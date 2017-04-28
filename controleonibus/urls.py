@@ -20,6 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    url(r'^', include('controleonibus.accounts.urls', namespace='accounts')),
     url(r'^', include('controleonibus.ionibus.urls', namespace='ionibus')),
     url(r'^admin/', admin.site.urls),
 ]
