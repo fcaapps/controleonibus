@@ -8,7 +8,7 @@ from django.contrib.auth.views import logout
 
 urlpatterns = [
     # Contas
-    url(r'^$', login, {'template_name': 'accounts/login.html'},  name="login"),
+    url(r'^entrar/$', login, {'template_name': 'accounts/login.html'},  name="login"),
     url(r'^sair/$', logout, {'next_page': 'accounts:login'}, name="logout"),
     url(r'^registre-se/$', register, name="register"),
 ]
