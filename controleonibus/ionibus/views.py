@@ -18,7 +18,7 @@ import reportlab
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4, cm
 from django.views.generic import View
-from controleonibus.ionibus.utils import render_to_pdf #created in step 4
+# from controleonibus.ionibus.utils import render_to_pdf #created in step 4
 
 # Chama Tela Principal
 @login_required
