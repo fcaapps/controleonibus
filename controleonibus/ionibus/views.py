@@ -182,7 +182,7 @@ def congregacao_consulta(request):
 
     return render(request, 'consultas_de_cadastro.html', context)
 
-# Imprimir relatório
+# Imprimir Relatório de Eventos
 @login_required
 def eventos_relatorio(request):
     eventos = Eventos.objects.all()
@@ -228,17 +228,19 @@ def eventos_relatorio(request):
     tipo = Paragraph('''Tipo''',styleBH)
     circuito = Paragraph('''Circuito''',styleBH)
     parte = Paragraph('''Parte''',styleBH)
-    # datadoevento = Paragraph('''Data do Evento''',styleBH)    
+    datadoevento = Paragraph('''Data do Evento''',styleBH)    
     textobase = Paragraph('''Texto Base''',styleBH)
 
     data = []
 
-    data.append([tipo,circuito,parte,textobase])
+    data.append([tipo,circuito,parte,datadoevento,textobase])
 
     # styles = getSampleStyleSheet()
     styleN = styles["BodyText"]
     styleN.alignment = TA_CENTER
     styleN.fontSize = 7
+
+
 
     # Table Details
     high = 730
@@ -251,13 +253,15 @@ def eventos_relatorio(request):
         elif evento.tipo == 'CR':            
             vtipo = 'Congresso Regional'
 
-        this_evento = [vtipo, evento.circuito, evento.parte, evento.texto_base]        
+        dataevento = evento.data_evento.strftime("%d-%m-%Y")            
+
+        this_evento = [vtipo, evento.circuito, evento.parte, dataevento, evento.texto_base]        
         data.append(this_evento)        
         high = high - 18
 
     # Table Size
     width, height = A4
-    table = Table(data,colWidths=[10.15 * cm, 1.7 * cm, 1.5 * cm, 5.5 * cm])    
+    table = Table(data,colWidths=[8.7 * cm, 1.7 * cm, 1.5 * cm, 3.0 * cm, 4.0 * cm])    
     table.setStyle(TableStyle([
         ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
         ('BOX', (0,0), (-1,-1), 0.25, colors.black), ]))
