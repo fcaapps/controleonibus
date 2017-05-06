@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^congregacao_delete/(?P<pk>\d+)/$', views.congregacao_delete, name="congregacao_delete"),
     # Relatórios
     url(r'^relatorio_eventos/$', views.eventos_relatorio, name="eventos_relatorio"),
+    url(r'^relatorio_congregacao/$', views.congregacao_relatorio, name="congregacao_relatorio"),
 ]

@@ -18,7 +18,8 @@ import reportlab
 from reportlab.lib.pagesizes import A4, cm
 from django.views.generic import View
 from reportlab.lib.colors import white, red, green, blue, gray, black
-# from controleonibus.ionibus.utils import render_to_pdf #created in step 4
+from datetime import date
+
 
 # Chama Tela Principal
 @login_required
@@ -182,6 +183,29 @@ def congregacao_consulta(request):
 
     return render(request, 'consultas_de_cadastro.html', context)
 
+
+
+# Cadastro de Responsáveis
+@login_required
+def responsaveis(request):
+    return render(request, 'responsaveis.html')
+
+# Cadastro de Capitães
+@login_required
+def capitaes(request):
+    return render(request, 'capitaes.html')
+
+# Cadastro de Passageiros
+@login_required
+def passageiros(request):
+    return render(request, 'passageiros.html')
+
+
+
+#
+# R E L A T Ó R I O S 
+#
+
 # Imprimir Relatório de Eventos
 @login_required
 def eventos_relatorio(request):
@@ -214,9 +238,9 @@ def eventos_relatorio(request):
     c.drawString(502,800,'Impresso em:')
 
     c.setFont('Helvetica-Bold', 10)
-    c.drawString(515,785,'01/07/2016')
+    c.drawString(515,785,date.today().strftime("%d-%m-%Y"))
     
-    c.line(30,770,565,770)
+    c.line(30,770,567,770)
 
     # Table header
     styles = getSampleStyleSheet()
@@ -225,6 +249,7 @@ def eventos_relatorio(request):
     styleBH.fontsize = 10
     styleBH.color = red
 
+    # Titulo da Tabela
     tipo = Paragraph('''Tipo''',styleBH)
     circuito = Paragraph('''Circuito''',styleBH)
     parte = Paragraph('''Parte''',styleBH)
@@ -239,7 +264,6 @@ def eventos_relatorio(request):
     styleN = styles["BodyText"]
     styleN.alignment = TA_CENTER
     styleN.fontSize = 7
-
 
 
     # Table Details
@@ -279,17 +303,89 @@ def eventos_relatorio(request):
     return response
 
 
-# Cadastro de Responsáveis
+# Imprimir Relatório de Congregações
 @login_required
-def responsaveis(request):
-    return render(request, 'responsaveis.html')
+def congregacao_relatorio(request):
+    congregacoes = Congregacao.objects.all()
 
-# Cadastro de Capitães
-@login_required
-def capitaes(request):
-    return render(request, 'capitaes.html')
+    response = HttpResponse(content_type='application/pdf')
+ 
+    # Criar o PDF Objeto
+    buffer = BytesIO()
+    c = canvas.Canvas(buffer, pagesize=A4)
 
-# Cadastro de Passageiros
-@login_required
-def passageiros(request):
-    return render(request, 'passageiros.html')
+    #Titulo
+    PAGE_HEIGHT=defaultPageSize[1]  
+    PAGE_WIDTH=defaultPageSize[0]  
+
+    c.setTitle("Relação de Congregações")
+
+    c.setFont('Helvetica', 25)
+    c.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-53, "Relação de Congregações")
+
+    # Cabeçalho
+    c.setLineWidth(.3)
+    c.setFont('Helvetica-Bold', 12)
+    c.drawString(55,800,'iOnibus')
+    
+    c.setFont('Helvetica', 10)
+    c.drawString(30,785,'Sistema de Controle')
+
+    c.setFont('Helvetica-Bold', 10)
+    c.drawString(502,800,'Impresso em:')
+
+    c.setFont('Helvetica-Bold', 10)
+    c.drawString(515,785,date.today().strftime("%d-%m-%Y"))
+    
+    c.line(30,770,567,770)
+
+    # Table header
+    styles = getSampleStyleSheet()
+    styleBH = styles["Normal"]
+    styleBH.alignment = TA_CENTER
+    styleBH.fontsize = 10
+    styleBH.color = red
+
+    # Titulo da Tabela
+    nomecongregacao = Paragraph('''Congregação''',styleBH)
+    coordenador = Paragraph('''Coordenador''',styleBH)
+    telcoordenador = Paragraph('''Tel. Coordenador''',styleBH)
+    emailcoordenador = Paragraph('''E-mail do Coordenador''',styleBH)    
+
+    data = []
+
+    data.append([nomecongregacao, coordenador,telcoordenador,emailcoordenador])
+
+    # styles = getSampleStyleSheet()
+    styleN = styles["BodyText"]
+    styleN.alignment = TA_CENTER
+    styleN.fontSize = 7
+
+
+    # Table Details
+    high = 730
+    for congregacao in congregacoes:        
+        this_congregacao = [congregacao.nome, congregacao.coordenador, congregacao.tel_coordenador,congregacao.email_coordenador]        
+        data.append(this_congregacao)        
+        high = high - 18
+
+    # Table Size
+    width, height = A4
+    table = Table(data,colWidths=[4.5 * cm, 4.0 * cm, 3.5 * cm, 6.92 * cm])    
+    table.setStyle(TableStyle([
+        ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
+        ('BOX', (0,0), (-1,-1), 0.25, colors.black), ]))
+        
+    # Pdf Size
+    table.wrapOn(c, width, height)
+    table.drawOn(c, 30, high)
+    c.showPage()    
+    
+    # Salva PDF
+    c.save()
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    return response
+
+    
