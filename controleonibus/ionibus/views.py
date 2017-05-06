@@ -13,11 +13,11 @@ from reportlab.lib.units import inch
 from reportlab.lib import colors
 from reportlab.pdfgen import canvas
 from io import BytesIO
-from reportlab.lib.enums import TA_CENTER
+from reportlab.lib.enums import TA_CENTER, TA_RIGHT, TA_LEFT
 import reportlab 
-from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4, cm
 from django.views.generic import View
+from reportlab.lib.colors import white, red, green, blue, gray, black
 # from controleonibus.ionibus.utils import render_to_pdf #created in step 4
 
 # Chama Tela Principal
@@ -186,37 +186,44 @@ def congregacao_consulta(request):
 @login_required
 def eventos_relatorio(request):
     eventos = Eventos.objects.all()
-    # context = {
-    #     'eventos': evento_lista,        
-    # }
 
-    # Criar o HttpResponse Cabeçalho with PDF
-    pdf = render_to_pdf('reports/report_eventos.html')
-    response = HttpResponse(pdf,content_type='application/pdf')
-    # response['Content-Disposition'] = 'attachment; filename=relatorio.pdf'
-
+    response = HttpResponse(content_type='application/pdf')
+ 
     # Criar o PDF Objeto
     buffer = BytesIO()
     c = canvas.Canvas(buffer, pagesize=A4)
 
+    #Titulo
+    PAGE_HEIGHT=defaultPageSize[1]  
+    PAGE_WIDTH=defaultPageSize[0]  
+
+    c.setTitle("Relação de Eventos")
+
+    c.setFont('Helvetica', 25)
+    c.drawCentredString(PAGE_WIDTH/2.0, PAGE_HEIGHT-53, "Relação de Eventos")
+
     # Cabeçalho
     c.setLineWidth(.3)
-    c.setFont('Helvetica', 22)
-    c.drawString(30,750,'FCA')
-    
-    c.setFont('Helvetica', 12)
-    c.drawString(30,735,'Relatório')
-
     c.setFont('Helvetica-Bold', 12)
-    c.drawString(480,750,'01/07/2016')
+    c.drawString(55,800,'iOnibus')
     
-    c.line(460,747,560,747)
+    c.setFont('Helvetica', 10)
+    c.drawString(30,785,'Sistema de Controle')
+
+    c.setFont('Helvetica-Bold', 10)
+    c.drawString(502,800,'Impresso em:')
+
+    c.setFont('Helvetica-Bold', 10)
+    c.drawString(515,785,'01/07/2016')
+    
+    c.line(30,770,565,770)
 
     # Table header
     styles = getSampleStyleSheet()
     styleBH = styles["Normal"]
     styleBH.alignment = TA_CENTER
     styleBH.fontsize = 10
+    styleBH.color = red
 
     tipo = Paragraph('''Tipo''',styleBH)
     circuito = Paragraph('''Circuito''',styleBH)
@@ -226,24 +233,31 @@ def eventos_relatorio(request):
 
     data = []
 
-    data = [[tipo,circuito,parte,textobase]]
+    data.append([tipo,circuito,parte,textobase])
 
-    styles = getSampleStyleSheet()
+    # styles = getSampleStyleSheet()
     styleN = styles["BodyText"]
     styleN.alignment = TA_CENTER
-    styleN.fontsize = 7
+    styleN.fontSize = 7
 
     # Table Details
-    high = 650
+    high = 730
     for evento in eventos:
-        # this_evento = [evento['tipo'], evento['circuito'], evento['parte'], evento['data_evento'], evento['texto_base']]
-        data = [evento.tipo, evento.circuito, evento.parte, evento.texto_base]        
-        # data.append(this_evento)
+        vtipo = ''
+        if evento.tipo == 'AC':
+            vtipo = 'Assembléia de Circuito'
+        elif evento.tipo == 'AE':            
+            vtipo = 'Assembléia de Especial'
+        elif evento.tipo == 'CR':            
+            vtipo = 'Congresso Regional'
+
+        this_evento = [vtipo, evento.circuito, evento.parte, evento.texto_base]        
+        data.append(this_evento)        
         high = high - 18
 
     # Table Size
     width, height = A4
-    table = Table(data,colWidths=[9.5 * cm, 1.9 * cm, 1.9 * cm, 1.9 * cm])    
+    table = Table(data,colWidths=[10.15 * cm, 1.7 * cm, 1.5 * cm, 5.5 * cm])    
     table.setStyle(TableStyle([
         ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
         ('BOX', (0,0), (-1,-1), 0.25, colors.black), ]))
@@ -275,14 +289,3 @@ def capitaes(request):
 @login_required
 def passageiros(request):
     return render(request, 'passageiros.html')
-
-# # Testando xhtml2pdf 
-# def eventos_report(request, *args, **kwargs):
-#     evento_lista = Eventos.objects.all()
-#     context = {
-#         'eventos': evento_lista,        
-#     }
-#         # pdf = render_to_pdf('pdf/invoice.html', data)
-#         # return HttpResponse(pdf, content_type='application/pdf')
-#     pdf = render_to_pdf('reports/report_eventos.html', context)
-#     return HttpResponse(pdf, content_type='application/pdf')
