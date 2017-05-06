@@ -276,13 +276,13 @@ def capitaes(request):
 def passageiros(request):
     return render(request, 'passageiros.html')
 
-# Testando xhtml2pdf 
-def eventos_report(request, *args, **kwargs):
-    evento_lista = Eventos.objects.all()
-    context = {
-        'eventos': evento_lista,        
-    }
-        # pdf = render_to_pdf('pdf/invoice.html', data)
-        # return HttpResponse(pdf, content_type='application/pdf')
-    pdf = render_to_pdf('reports/report_eventos.html', context)
-    return HttpResponse(pdf, content_type='application/pdf')
+# # Testando xhtml2pdf 
+# def eventos_report(request, *args, **kwargs):
+#     evento_lista = Eventos.objects.all()
+#     context = {
+#         'eventos': evento_lista,        
+#     }
+#         # pdf = render_to_pdf('pdf/invoice.html', data)
+#         # return HttpResponse(pdf, content_type='application/pdf')
+#     pdf = render_to_pdf('reports/report_eventos.html', context)
+#     return HttpResponse(pdf, content_type='application/pdf')
