@@ -50,13 +50,22 @@
         </table>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-7">
                <a class="btn btn-info" href="{% url 'ionibus:eventos_cadastro'%}" style="width:150px">
                   <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                   Voltar
                </a>
             </div>
+
+            <div class="col-md-7">
+               <a class="btn btn-success" href="{% url 'ionibus:eventos_relatorio'%}" style="width:150px">
+                  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                  Imprimir
+               </a>
+            </div>
+
         </div>
+
 
     {% endif %}
 

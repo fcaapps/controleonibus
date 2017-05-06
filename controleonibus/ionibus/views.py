@@ -6,9 +6,19 @@ from controleonibus.ionibus.forms import EventosForm
 from controleonibus.ionibus.forms import CongregacaoForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-
-# def home(request):
-#     return render(request, 'home.html')
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table,TableStyle
+from reportlab.rl_config import defaultPageSize
+from reportlab.lib.units import inch
+from reportlab.lib import colors
+from reportlab.pdfgen import canvas
+from io import BytesIO
+from reportlab.lib.enums import TA_CENTER
+import reportlab 
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4, cm
+from django.views.generic import View
+from controleonibus.ionibus.utils import render_to_pdf #created in step 4
 
 # Chama Tela Principal
 @login_required
@@ -172,6 +182,84 @@ def congregacao_consulta(request):
 
     return render(request, 'consultas_de_cadastro.html', context)
 
+# Imprimir relatório
+@login_required
+def eventos_relatorio(request):
+    eventos = Eventos.objects.all()
+    # context = {
+    #     'eventos': evento_lista,        
+    # }
+
+    # Criar o HttpResponse Cabeçalho with PDF
+    pdf = render_to_pdf('reports/report_eventos.html')
+    response = HttpResponse(pdf,content_type='application/pdf')
+    # response['Content-Disposition'] = 'attachment; filename=relatorio.pdf'
+
+    # Criar o PDF Objeto
+    buffer = BytesIO()
+    c = canvas.Canvas(buffer, pagesize=A4)
+
+    # Cabeçalho
+    c.setLineWidth(.3)
+    c.setFont('Helvetica', 22)
+    c.drawString(30,750,'FCA')
+    
+    c.setFont('Helvetica', 12)
+    c.drawString(30,735,'Relatório')
+
+    c.setFont('Helvetica-Bold', 12)
+    c.drawString(480,750,'01/07/2016')
+    
+    c.line(460,747,560,747)
+
+    # Table header
+    styles = getSampleStyleSheet()
+    styleBH = styles["Normal"]
+    styleBH.alignment = TA_CENTER
+    styleBH.fontsize = 10
+
+    tipo = Paragraph('''Tipo''',styleBH)
+    circuito = Paragraph('''Circuito''',styleBH)
+    parte = Paragraph('''Parte''',styleBH)
+    # datadoevento = Paragraph('''Data do Evento''',styleBH)    
+    textobase = Paragraph('''Texto Base''',styleBH)
+
+    data = []
+
+    data = [[tipo,circuito,parte,textobase]]
+
+    styles = getSampleStyleSheet()
+    styleN = styles["BodyText"]
+    styleN.alignment = TA_CENTER
+    styleN.fontsize = 7
+
+    # Table Details
+    high = 650
+    for evento in eventos:
+        # this_evento = [evento['tipo'], evento['circuito'], evento['parte'], evento['data_evento'], evento['texto_base']]
+        data = [evento.tipo, evento.circuito, evento.parte, evento.texto_base]        
+        # data.append(this_evento)
+        high = high - 18
+
+    # Table Size
+    width, height = A4
+    table = Table(data,colWidths=[9.5 * cm, 1.9 * cm, 1.9 * cm, 1.9 * cm])    
+    table.setStyle(TableStyle([
+        ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
+        ('BOX', (0,0), (-1,-1), 0.25, colors.black), ]))
+        
+    # Pdf Size
+    table.wrapOn(c, width, height)
+    table.drawOn(c, 30, high)
+    c.showPage()    
+    
+    # Salva PDF
+    c.save()
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    return response
+
 
 # Cadastro de Responsáveis
 @login_required
@@ -187,3 +275,14 @@ def capitaes(request):
 @login_required
 def passageiros(request):
     return render(request, 'passageiros.html')
+
+# Testando xhtml2pdf 
+def eventos_report(request, *args, **kwargs):
+    evento_lista = Eventos.objects.all()
+    context = {
+        'eventos': evento_lista,        
+    }
+        # pdf = render_to_pdf('pdf/invoice.html', data)
+        # return HttpResponse(pdf, content_type='application/pdf')
+    pdf = render_to_pdf('reports/report_eventos.html', context)
+    return HttpResponse(pdf, content_type='application/pdf')

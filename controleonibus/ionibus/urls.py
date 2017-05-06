@@ -2,6 +2,7 @@ from django.conf.urls import url, include
 
 from controleonibus.ionibus import views
 
+
 urlpatterns = [
     # Tela Principal
     url(r'^$', views.painel, name="painel"),
@@ -21,4 +22,6 @@ urlpatterns = [
     # Deletes
     url(r'^eventos_delete/(?P<pk>\d+)/$', views.eventos_delete, name="eventos_delete"),
     url(r'^congregacao_delete/(?P<pk>\d+)/$', views.congregacao_delete, name="congregacao_delete"),
+    # Relatórios
+    url(r'^relatorio_eventos/$', views.eventos_report, name="eventos_relatorio"),
 ]
