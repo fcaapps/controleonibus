@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['https://ionibus.herokuapp.com/']
+ALLOWED_HOSTS = ['https://ionibus-app.herokuapp.com/']
 
 
 # Application definition
