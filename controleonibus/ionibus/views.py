@@ -4,6 +4,7 @@ from controleonibus.ionibus.models import Eventos
 from controleonibus.ionibus.models import Congregacao
 from controleonibus.ionibus.forms import EventosForm
 from controleonibus.ionibus.forms import CongregacaoForm
+from controleonibus.tasks.serializers import EventosTaskSerializer
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from reportlab.lib.styles import getSampleStyleSheet
@@ -19,6 +20,8 @@ from reportlab.lib.pagesizes import A4, cm
 from django.views.generic import View
 from reportlab.lib.colors import white, red, green, blue, gray, black
 from datetime import date
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
 
 
 # Chama Tela Principal
@@ -40,12 +43,13 @@ def eventos_cadastro(request):
 
     context = {
         'form': form,
-        'opcao': opcao,
+        'opcao': opcao,        
     }
 
     if form.is_valid():
         form.save()
         return redirect('/consulta_eventos/')
+        
     return render(request, 'cadastros.html', context)
 
 # Altera Eventos

@@ -15,13 +15,19 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework import routers
+from controleonibus.tasks.views import EventosTaskViewSet, UserViewSet
+
+router = routers.DefaultRouter()
+router.register(r'eventos', EventosTaskViewSet)
+router.register(r'user', UserViewSet)
 
 urlpatterns = [
     url(r'^', include('controleonibus.ionibus.urls', namespace='ionibus')),
     url(r'^', include('controleonibus.accounts.urls', namespace='accounts')),
+    url(r'^api/',include(router.urls)),
     url(r'^admin/', admin.site.urls),
 ]
 

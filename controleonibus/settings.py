@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'controleonibus.ionibus',
     'controleonibus.accounts',
     'bootstrapform',
+    'rest_framework',
+    'controleonibus.tasks',
 ]
 
 MIDDLEWARE_CLASSES = [

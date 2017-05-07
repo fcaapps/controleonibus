@@ -40,6 +40,8 @@ class Eventos(models.Model):
     texto_base = models.CharField('Texto Base', max_length=30, blank=True)
     criado_em = models.DateTimeField('Criado em', auto_now_add=True)
     atualizado_em = models.DateTimeField('Atualizado em', auto_now=True)
+    owner = models.ForeignKey('auth.User', related_name='tasks', null=True, blank=True)
+    
 
     def __str__(self):
         return self.tipo
