@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['https://ionibus.herokuapp.com/']
 
 # Application definition
 
-INSTALLED_APPS = [
+DEFAULT_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,14 +48,10 @@ THIRD_PARTY_APPS = [
     'rest_framework',
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': ( 
-        'rest_framework.permissions.IsAuthenticated',
-    )
-}
+
+
+INSTALLED_APPS = THIRD_PARTY_APPS + DEFAULT_APPS
+
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
