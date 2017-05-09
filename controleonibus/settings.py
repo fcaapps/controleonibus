@@ -41,8 +41,11 @@ INSTALLED_APPS = [
     'controleonibus.ionibus',
     'controleonibus.accounts',
     'bootstrapform',
-    'rest_framework',
     'controleonibus.tasks',
+]
+
+THIRD_PARTY_APPS = [
+    'rest_framework',
 ]
 
 REST_FRAMEWORK = {
