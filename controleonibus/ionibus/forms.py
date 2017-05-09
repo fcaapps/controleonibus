@@ -5,7 +5,7 @@ from controleonibus.ionibus.models import Congregacao
 class EventosForm(ModelForm):
     class Meta:
         model = Eventos
-        exclude = ['id', 'criado_em', 'atualizado_em']
+        exclude = ['id', 'criado_em', 'atualizado_em', 'owner']
 
 class CongregacaoForm(ModelForm):
     class Meta:
