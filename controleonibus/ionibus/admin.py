@@ -15,7 +15,7 @@ class CongregacaoAdmin(admin.ModelAdmin):
     date_hierarchy = 'criado_em'
     list_display = ('nome','coordenador','tel_coordenador','email_coordenador','criado_em', 'atualizado_em')
     search_fields = ('nome', 'coordenador', 'email_coordenador')
-    list_per_page = 3;    
+    list_per_page = 10;    
 
     # def get_actions(self, request):
     #     actions = super(CongregacaoAdmin, self).get_actions(request)
