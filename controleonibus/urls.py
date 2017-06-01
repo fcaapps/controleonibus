@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^', include('controleonibus.ionibus.urls', namespace='ionibus')),
     url(r'^', include('controleonibus.accounts.urls', namespace='accounts')),
     url(r'^api/',include(router.urls)),
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls)
 ]
 
 if settings.DEBUG:

@@ -50,7 +50,9 @@ class Eventos(models.Model):
     criado_em = models.DateTimeField('Criado em', auto_now_add=True)
     atualizado_em = models.DateTimeField('Atualizado em', auto_now=True)
     owner = models.ForeignKey('auth.User', related_name='tasks', null=True, blank=True)
-    
+
+    class Meta: 
+        verbose_name_plural = 'Eventos';          
 
     def __str__(self):
         return self.tipo
@@ -63,6 +65,12 @@ class Congregacao(models.Model):
     email_coordenador = models.CharField('E-mail', max_length=100)
     criado_em = models.DateTimeField('Criado em', auto_now_add=True)
     atualizado_em = models.DateTimeField('Atualizado em', auto_now=True)
+
+    class Meta: 
+        verbose_name_plural = 'Congregação';          
+
+    def __str__(self):
+        return self.nome
 
 class Responsavel(models.Model):
     nome = models.CharField('Nome', max_length=100)
