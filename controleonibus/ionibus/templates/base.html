@@ -51,7 +51,7 @@
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Parâmetros<span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="{% url 'ionibus:eventos_cadastro' %}">Cadastro de Eventos</a></li>
+                    <li><a href="{% url 'ionibus:ionibus.add_eventos' %}">Cadastro de Eventos</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="{% url 'ionibus:congregacao_cadastro' %}">Cadastro de Congregações</a></li>
                     <li role="separator" class="divider"></li>
@@ -78,8 +78,8 @@
             </div><!--/.nav-collapse -->
           </div><!--/.container-fluid -->
         </nav>
+            {% block content %}{% endblock %}    
 
-            {% block content %}{% endblock %}
 
     </div> <!-- /container -->
 

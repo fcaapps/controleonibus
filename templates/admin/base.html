@@ -10,6 +10,16 @@
         float: left;
         width: 215%;
     }  
+    #changelist-filter-fca {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1000;
+        width: 250px;
+        background: #f8f8f8;
+        border-left: none;
+        margin: 0;
+    }
 </style>
 {% endblock %}
 {% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}" />{% endif %}

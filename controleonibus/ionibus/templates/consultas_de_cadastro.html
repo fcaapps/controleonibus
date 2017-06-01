@@ -35,12 +35,12 @@
                     <td style="vertical-align:middle">{{evento.texto_base}}</td>
 
                     <td style="vertical-align:middle">
-                        <a class="btn btn-success" href="{% url 'ionibus:eventos_update' evento.id %}">
+                        <a class="btn btn-success" href="{% url 'ionibus:ionibus.change_eventos' evento.id %}">
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </a>
                     </td>
                     <td style="vertical-align:middle">
-                        <a class="btn btn-danger" href="{% url 'ionibus:eventos_delete' evento.id %}">
+                        <a class="btn btn-danger" href="{% url 'ionibus:ionibus.delete_eventos' evento.id %}">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                         </a>
                     </td>
@@ -51,7 +51,7 @@
 
         <div class="row">
             <div class="col-md-7">
-               <a class="btn btn-info" href="{% url 'ionibus:eventos_cadastro'%}" style="width:150px">
+               <a class="btn btn-info" href="{% url 'ionibus:ionibus.add_eventos'%}" style="width:150px">
                   <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                   Voltar
                </a>

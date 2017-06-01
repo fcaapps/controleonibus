@@ -22,7 +22,9 @@ from reportlab.lib.colors import white, red, green, blue, gray, black
 from datetime import date
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-
+from django.views.generic.base import View
+from django.core.exceptions import PermissionDenied
+from django.core.urlresolvers import resolve
 
 # Chama Tela Principal
 @login_required
@@ -34,10 +36,17 @@ def painel(request):
 def contatos(request):
     return render(request, 'contatos.html')
 
+# Chama Tela Sem Permissão
+@login_required
+def sempermissao(request):
+    return render(request, 'sempermissao.html')
+
+
 # Cadastro de Eventos
 @login_required
 def eventos_cadastro(request):
     form = EventosForm(request.POST or None)
+    urlName = resolve(request.path).url_name
 
     opcao = 'Eventos'
 
@@ -45,6 +54,12 @@ def eventos_cadastro(request):
         'form': form,
         'opcao': opcao,        
     }
+
+    if "_min" in urlName:
+        urlName = urlName[:-4]
+
+    if not request.user.has_perm(urlName):
+        return redirect('/sem_permissao/')
 
     if form.is_valid():
         form.save()
@@ -57,6 +72,7 @@ def eventos_cadastro(request):
 def eventos_update(request,pk):
     evento = Eventos.objects.get(pk=pk)
     form = EventosForm(request.POST or None, instance=evento)
+    urlName = resolve(request.path).url_name
 
     opcao = 'Eventos'
 
@@ -65,6 +81,10 @@ def eventos_update(request,pk):
         'form': form,
         'opcao': opcao,
     }
+
+    if not request.user.has_perm(urlName):
+        return redirect('/sem_permissao/')
+
     if form.is_valid():
         form.save()
         return redirect('/consulta_eventos/')
@@ -74,12 +94,16 @@ def eventos_update(request,pk):
 @login_required
 def eventos_delete(request, pk):
     evento = Eventos.objects.get(pk=pk)
+    urlName = resolve(request.path).url_name
 
     opcao = 'Eventos'
     context = {
         'object': evento,
         'opcao': opcao,
     }
+
+    if not request.user.has_perm(urlName):
+        return redirect('/sem_permissao/')
 
     if request.method=='POST':
         evento.delete()
@@ -113,7 +137,7 @@ def eventos_consulta(request):
 
 # Cadastro de Congregação
 @login_required
-def congregacao_cadastro(request):
+def congregacao_cadastro(request):    
     form = CongregacaoForm(request.POST or None)
 
     opcao = 'Congregacao'

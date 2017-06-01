@@ -41,7 +41,8 @@ DEFAULT_APPS = [
     'controleonibus.ionibus',
     'controleonibus.accounts',
     'bootstrapform',
-    'controleonibus.tasks',
+    'controleonibus.tasks'
+
 ]
 
 THIRD_PARTY_APPS = [
@@ -69,7 +70,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 ROOT_URLCONF = 'controleonibus.urls'
@@ -84,7 +85,8 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.contrib.messages.context_processors.messages'
+
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% block content %}
+	<br/>
+	<br/>
+	<div align="center">
+
+		<font color="#236B8E"><h1>OPS! ACESSO NEGADO</h1></font>
+		<p><font color="gray"><h6>Infelizmente seu acesso a este recurso do sistema não está permitido. Caso você realmente</h6></font></p>
+	    <p><font color="gray"><h6>precise acessar esta área, por favor entre em contato com o administrador do sistema.</h6></font></p>		
+
+	    <br/>
+
+	    <a class="btn btn-primary" href="{{ request.META.HTTP_REFERER }}">
+        	<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+            Voltar para página anterior
+        </a>
+
+
+	</div>
+{% endblock %}
