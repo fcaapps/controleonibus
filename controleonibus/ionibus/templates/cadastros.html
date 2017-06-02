@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load bootstrap %}
 {% block content %}
+    <!-- Cadastro de Eventos -->
     {% if opcao == 'Eventos' %}
         <div class="alert alert-info" role="alert"><strong>>> Cadastro de {{ opcao }}</strong></div>
         <form method="post">
@@ -23,6 +24,7 @@
         </form>
     {% endif %}
 
+    <!-- Cadastro de Congregação -->
     {% if opcao == 'Congregacao' %}
         <div class="alert alert-info" role="alert"><strong>>> Cadastro de Congregação</strong></div>
         <form method="post">
@@ -34,6 +36,75 @@
                   Cadastrar
               </button>
               <a class="btn btn-success" href="{% url 'ionibus:congregacao_consulta'%}" style="width:150px">
+                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                  Consultar
+              </a>
+              <a class="btn btn-info" href="{% url 'ionibus:painel'%}" style="width:150px">
+                  <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                  Sair
+              </a>
+          </div>
+        </form>
+    {% endif %}
+
+    <!-- Cadastro de Responsável -->
+    {% if opcao == 'Responsavel' %}
+        <div class="alert alert-info" role="alert"><strong>>> Cadastro de Responsáveis</strong></div>
+        <form method="post">
+            {% csrf_token %}
+            {{form | bootstrap}}
+          <div align="left">
+              <button type="submit" class="btn btn-primary" style="width:150px">
+                  <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                  Cadastrar
+              </button>
+              <a class="btn btn-success" href="{% url 'ionibus:responsavel_consulta'%}" style="width:150px">
+                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                  Consultar
+              </a>
+              <a class="btn btn-info" href="{% url 'ionibus:painel'%}" style="width:150px">
+                  <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                  Sair
+              </a>
+          </div>
+        </form>
+    {% endif %}
+
+    <!-- Cadastro de Capitão -->
+    {% if opcao == 'Capitao' %}
+        <div class="alert alert-info" role="alert"><strong>>> Cadastro de Capitães</strong></div>
+        <form method="post">
+            {% csrf_token %}
+            {{form | bootstrap}}
+          <div align="left">
+              <button type="submit" class="btn btn-primary" style="width:150px">
+                  <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                  Cadastrar
+              </button>
+              <a class="btn btn-success" href="{% url 'ionibus:capitao_consulta'%}" style="width:150px">
+                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                  Consultar
+              </a>
+              <a class="btn btn-info" href="{% url 'ionibus:painel'%}" style="width:150px">
+                  <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                  Sair
+              </a>
+          </div>
+        </form>
+    {% endif %}
+
+    <!-- Cadastro de Passageiros -->
+    {% if opcao == 'Passageiro' %}
+        <div class="alert alert-info" role="alert"><strong>>> Cadastro de Passageiros</strong></div>
+        <form method="post">
+            {% csrf_token %}
+            {{form | bootstrap}}
+          <div align="left">
+              <button type="submit" class="btn btn-primary" style="width:150px">
+                  <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                  Cadastrar
+              </button>
+              <a class="btn btn-success" href="{% url 'ionibus:passageiro_consulta'%}" style="width:150px">
                   <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                   Consultar
               </a>

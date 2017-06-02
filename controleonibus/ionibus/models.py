@@ -103,13 +103,13 @@ class Eventos(models.Model):
 
 class Congregacao(models.Model):
     nome = models.CharField('Nome', max_length=100)
+    endereco = models.CharField('Endereço', max_length=200, null=True, blank=True)
     coordenador = models.CharField('Coordenador', max_length=50)
     tel_coordenador = models.CharField('Telefone Coordenador', max_length=30)
     email_coordenador = models.CharField('E-mail', max_length=100)
     criado_em = models.DateTimeField('Criado em', auto_now_add=True)
     atualizado_em = models.DateTimeField('Atualizado em', auto_now=True)
     circuito = models.ForeignKey('ionibus.circuito', related_name='fk_CircuitoCong', null=True, blank=True)
-    encarregado = models.ForeignKey('ionibus.responsavel', related_name='fk_EncarregadoCong', null=True, blank=True)    
 
     class Meta: 
         verbose_name_plural = 'Congregação'          
@@ -120,15 +120,15 @@ class Congregacao(models.Model):
 class Responsavel(models.Model):
     ENCARREGADO = (
         ('EG', 'Encarregado Geral'),                
-        ('EC', 'Encarregado da Congregação'),
+        ('EC', 'Encarregado de Congregação'),
         ('EE', 'Encarregado do Evento'),
-        ('AC', 'Ajudante da Congregação'),
+        ('AC', 'Ajudante de Congregação'),
         ('AE', 'Ajudante do Evento'),
     )
 
     nome = models.CharField('Nome', max_length=100)
     tipo = models.CharField('Tipo', max_length=2, choices=ENCARREGADO) # {EC = ENCARREGADO DA CONGREGAÇÃO, EE = ENCARREGADO DO EVENTO, AC - AJUDANTE DA CONGREGAÇÃO, AE - AJUDANTE DO EVENTO}
-    congregacao = models.ForeignKey('ionibus.congregacao', related_name='tasks', null=True, blank=True)
+    congregacao = models.ForeignKey('ionibus.congregacao', related_name='fk_cong_Responsavel', null=True, blank=True)
     email = models.CharField('E-mail', max_length=100)
     telefone = models.CharField('Telefone', max_length=30)
     foto = models.ImageField(
@@ -146,25 +146,38 @@ class Responsavel(models.Model):
 
 class Capitao(models.Model):
     nome = models.CharField('Nome', max_length=100)
-    id_congregacao = models.IntegerField('Congregação')
+    congregacao = models.ForeignKey('ionibus.congregacao', related_name='fk_cong_Capitao', null=True, blank=True)
+    responsavel = models.ForeignKey('ionibus.responsavel', related_name='fk_resp_Capitao', null=True, blank=True)
     telefone1 = models.CharField('Telefone 1', max_length=30)
-    telefone2 = models.CharField('Telefone 2', max_length=30)
-    email = models.CharField('E-mail', max_length=100)
+    telefone2 = models.CharField('Telefone 2', max_length=30, null=True, blank=True)
     foto = models.ImageField(
         upload_to='ionibus/images', verbose_name='Imagem', null=True, blank=True
     )
     criado_em = models.DateTimeField('Criado em', auto_now_add=True)
     atualizado_em = models.DateTimeField('Atualizado em', auto_now=True)
     
+    class Meta: 
+        verbose_name_plural = 'Capitão'          
+
+    def __str__(self):
+        return self.nome
 
 class Passageiro(models.Model):
+    CRIANCA_COLO = (
+        ('S', 'Sim'),                
+        ('N', 'Não'),
+    )
+
     nome = models.CharField('Nome', max_length=100)
-    id_congregacao = models.IntegerField('Congregação')
+    congregacao = models.ForeignKey('ionibus.congregacao', related_name='fk_cong_Passageiro', null=True, blank=True)
     rg_cpf = models.CharField('RG/CPF', max_length=30)
-    id_capitao = models.IntegerField('Capitão')
-    crianca_colo = models.CharField('Criança de Colo', max_length=1)
-    observacao = models.TextField('Criança de Colo', blank=True)
+    capitao = models.ForeignKey('ionibus.capitao', related_name='fk_cap_Passageiro', null=True, blank=True)
+    crianca_colo = models.CharField('Criança de Colo', max_length=1, default='N', choices=CRIANCA_COLO)
     criado_em = models.DateTimeField('Criado em', auto_now_add=True)
     atualizado_em = models.DateTimeField('Atualizado em', auto_now=True)
-    
    
+    class Meta: 
+        verbose_name_plural = 'Passageiro'          
+
+    def __str__(self):
+        return self.nome

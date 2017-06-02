@@ -41,7 +41,8 @@ DEFAULT_APPS = [
     'controleonibus.ionibus',
     'controleonibus.accounts',
     'bootstrapform',
-    'controleonibus.tasks'
+    'controleonibus.tasks',
+    'datetimewidget'
 
 ]
 

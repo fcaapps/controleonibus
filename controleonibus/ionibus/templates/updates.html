@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load bootstrap %}
 {% block content %}
+
+    <!-- Alteração Eventos -->
     {% if opcao == 'Eventos' %}
         <div class="alert alert-info" role="alert"><strong>>> Alterar Eventos</strong></div>
         <form method="post">
@@ -19,6 +21,7 @@
         </form>
     {% endif %}
 
+    <!-- Alteração Congregação -->
     {% if opcao == 'Congregacao' %}
         <div class="alert alert-info" role="alert"><strong>>> Alterar Congregação</strong></div>
         <form method="post">
@@ -36,6 +39,65 @@
           </div>
         </form>
     {% endif %}
+
+
+    <!-- Alteração Responsável -->
+    {% if opcao == 'Responsavel' %}
+        <div class="alert alert-info" role="alert"><strong>>> Alterar Responsável</strong></div>
+        <form method="post">
+            {% csrf_token %}
+            {{form | bootstrap}}
+          <div align="left">
+              <button type="submit" class="btn btn-primary" style="width:150px">
+                  <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                  Gravar
+              </button>
+              <a class="btn btn-info" href="{% url 'ionibus:responsavel_consulta'%}" style="width:150px">
+                  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                  Voltar
+              </a>
+          </div>
+        </form>
+    {% endif %}
+
+    <!-- Alteração Capitão -->
+    {% if opcao == 'Capitao' %}
+        <div class="alert alert-info" role="alert"><strong>>> Alterar Capitão</strong></div>
+        <form method="post">
+            {% csrf_token %}
+            {{form | bootstrap}}
+          <div align="left">
+              <button type="submit" class="btn btn-primary" style="width:150px">
+                  <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                  Gravar
+              </button>
+              <a class="btn btn-info" href="{% url 'ionibus:capitao_consulta'%}" style="width:150px">
+                  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                  Voltar
+              </a>
+          </div>
+        </form>
+    {% endif %}
+
+    <!-- Alteração Passageiro -->
+    {% if opcao == 'Passageiro' %}
+        <div class="alert alert-info" role="alert"><strong>>> Alterar Passageiro</strong></div>
+        <form method="post">
+            {% csrf_token %}
+            {{form | bootstrap}}
+          <div align="left">
+              <button type="submit" class="btn btn-primary" style="width:150px">
+                  <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                  Gravar
+              </button>
+              <a class="btn btn-info" href="{% url 'ionibus:passageiro_consulta'%}" style="width:150px">
+                  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                  Voltar
+              </a>
+          </div>
+        </form>
+    {% endif %}
+
 
     <br/>
 {% endblock %}

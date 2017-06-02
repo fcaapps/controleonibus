@@ -68,7 +68,9 @@
 
 
     {% endif %}
+    
 
+    <!--Consulta de Congregações-->
     {% if opcao == 'Congregacao' %}
         <div class="alert alert-info" role="alert"><strong>>> Consulta Congregação</strong></div>
 
@@ -90,12 +92,12 @@
                     <td style="vertical-align:middle">{{congrega.email_coordenador}}</td>
 
                     <td style="vertical-align:middle">
-                        <a class="btn btn-success" href="{% url 'ionibus:congregacao_update' congrega.id %}">
+                        <a class="btn btn-success" href="{% url 'ionibus:ionibus.change_congregacao' congrega.id %}">
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </a>
                     </td>
                     <td style="vertical-align:middle">
-                        <a class="btn btn-danger" href="{% url 'ionibus:congregacao_delete' congrega.id %}">
+                        <a class="btn btn-danger" href="{% url 'ionibus:ionibus.delete_congregacao' congrega.id %}">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                         </a>
                     </td>
@@ -106,7 +108,7 @@
 
         <div class="row">
             <div class="col-md-7">
-               <a class="btn btn-info" href="{% url 'ionibus:congregacao_cadastro'%}" style="width:150px">
+               <a class="btn btn-info" href="{% url 'ionibus:ionibus.add_congregacao'%}" style="width:150px">
                   <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                   Voltar
                </a>
@@ -122,6 +124,189 @@
         </div>
 
     {% endif %}
+
+
+    <!--Consulta de Responsaveis-->
+    {% if opcao == 'Responsavel' %}
+        <div class="alert alert-info" role="alert"><strong>>> Consulta Responsavel</strong></div>
+
+        <table class="table table-condensed">
+            <tr class="info">
+                <td><b>Responsável</b></td>
+                <td><b>Tipo do Responsável</b></td>
+                <td><b>Congregação</b></td>
+                <td><b>E-mail do Responsável</b></td>
+                <td><b>Telefone</b></td>
+                <td><b>Alterar</b></td>
+                <td><b>Excluir</b></td>
+            </tr>
+
+            {% for responsa in responsavel %}
+                <tr>
+                    <td style="vertical-align:middle">{{responsa.nome}}</td>
+                    <td style="vertical-align:middle">{{responsa.tipo}}</td>
+                    <td style="vertical-align:middle">{{responsa.congregacao}}</td>
+                    <td style="vertical-align:middle">{{responsa.email}}</td>
+                    <td style="vertical-align:middle">{{responsa.telefone}}</td>
+
+                    <td style="vertical-align:middle">
+                        <a class="btn btn-success" href="{% url 'ionibus:ionibus.change_responsavel' responsa.id %}">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                    <td style="vertical-align:middle">
+                        <a class="btn btn-danger" href="{% url 'ionibus:ionibus.delete_responsavel' responsa.id %}">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+        </table>
+
+        <div class="row">
+            <div class="col-md-7">
+               <a class="btn btn-info" href="{% url 'ionibus:ionibus.add_responsavel'%}" style="width:150px">
+                  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                  Voltar
+               </a>
+            </div>
+
+            <div class="col-md-7">
+               <a class="btn btn-success" href="{% url 'ionibus:responsavel_relatorio' %}" style="width:150px">
+                  <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                  Imprimir
+               </a>
+            </div>
+
+        </div>
+
+    {% endif %}
+
+    <!--Consulta de Capitães-->
+    {% if opcao == 'Capitao' %}
+ 
+        <div class="alert alert-info" role="alert"><strong>>> Consulta Capitão</strong></div>
+
+        <table class="table table-condensed">
+            <tr class="info">
+                <td><b>Capitão</b></td>
+                <td><b>Congregação</b></td>
+                <td><b>Responsável</b></td>
+                <td><b>Telefone 1</b></td>
+                <td><b>Telefone 2</b></td>                
+                <td><b>E-mail do Responsável</b></td>
+                <td><b>Alterar</b></td>
+                <td><b>Excluir</b></td>
+            </tr>
+
+            {% for capita in capitao %}
+                <tr>
+                    <td style="vertical-align:middle">{{capita.nome}}</td>
+                    <td style="vertical-align:middle">{{capita.congregacao}}</td>
+                    <td style="vertical-align:middle">{{capita.responsavel}}</td>                    
+                    <td style="vertical-align:middle">{{capita.telefone1}}</td>
+                    <td style="vertical-align:middle">{{capita.telefone2}}</td>                    
+                    <td style="vertical-align:middle">{{capita.email}}</td>
+
+                    <td style="vertical-align:middle">
+                        <a class="btn btn-success" href="{% url 'ionibus:ionibus.change_capitao' capita.id %}">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                    <td style="vertical-align:middle">
+                        <a class="btn btn-danger" href="{% url 'ionibus:ionibus.delete_capitao' capita.id %}">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+        </table>
+
+        <div class="row">
+            <div class="col-md-7">
+               <a class="btn btn-info" href="{% url 'ionibus:ionibus.add_capitao'%}" style="width:150px">
+                  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                  Voltar
+               </a>
+            </div>
+
+            <div class="col-md-7">
+               <a class="btn btn-success" href="{% url 'ionibus:responsavel_relatorio' %}" style="width:150px">
+                  <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                  Imprimir
+               </a>
+            </div>
+
+        </div>
+
+    {% endif %}
+
+    <!--Consulta de Passageiros-->
+    {% if opcao == 'Passageiro' %}
+ 
+        <div class="alert alert-info" role="alert"><strong>>> Consulta Passageiro</strong></div>
+
+        <table class="table table-condensed">
+
+            <tr class="info">
+                <td><b>Passageiro</b></td>
+                <td><b>Congregação</b></td>
+                <td><b>Rg/Cpf</b></td>
+                <td><b>Capitão</b></td>
+                <td><b>Criança Colo</b></td>                                
+                <td><b>Alterar</b></td>
+                <td><b>Excluir</b></td>
+            </tr>
+
+            {% for passage in passageiro %}
+
+                <tr>
+                    <td style="vertical-align:middle">{{passage.nome}}</td>
+                    <td style="vertical-align:middle">{{passage.congregacao}}</td>
+                    <td style="vertical-align:middle">{{passage.rg_cpf}}</td>                    
+                    <td style="vertical-align:middle">{{passage.capitao}}</td>
+                    {% if passage.crianca_colo == 'S' %}
+                       <td style="vertical-align:middle">Sim</td>
+                    {% endif %}
+                    {% if passage.crianca_colo == 'N' %}
+                       <td style="vertical-align:middle">Não</td>
+                    {% endif %}                    
+                    <td style="vertical-align:middle">
+                        <a class="btn btn-success" href="{% url 'ionibus:ionibus.change_passageiro' passage.id %}">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                    <td style="vertical-align:middle">
+                        <a class="btn btn-danger" href="{% url 'ionibus:ionibus.delete_passageiro' passage.id %}">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+        </table>
+
+        <div class="row">
+            <div class="col-md-7">
+               <a class="btn btn-info" href="{% url 'ionibus:ionibus.add_passageiro'%}" style="width:150px">
+                  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                  Voltar
+               </a>
+            </div>
+
+            <div class="col-md-7">
+               <a class="btn btn-success" href="{% url 'ionibus:responsavel_relatorio' %}" style="width:150px">
+                  <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                  Imprimir
+               </a>
+            </div>
+
+        </div>
+
+    {% endif %}
+
 
     <br/>
 {% endblock %}

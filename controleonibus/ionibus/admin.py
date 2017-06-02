@@ -3,6 +3,8 @@ from controleonibus.ionibus.models import Eventos
 from controleonibus.ionibus.models import Congregacao
 from controleonibus.ionibus.models import Circuito
 from controleonibus.ionibus.models import Responsavel
+from controleonibus.ionibus.models import Capitao
+from controleonibus.ionibus.models import Passageiro
 from django.contrib.admin.models import LogEntry
 
 class CircuitoAdmin(admin.ModelAdmin):
@@ -23,9 +25,9 @@ class EventoAdmin(admin.ModelAdmin):
 class CongregacaoAdmin(admin.ModelAdmin):
     model = Congregacao
     date_hierarchy = 'criado_em'
-    list_display = ('nome','coordenador','tel_coordenador','email_coordenador','circuito', 'encarregado')
+    list_display = ('nome','coordenador', 'endereco', 'tel_coordenador','email_coordenador','circuito')
     list_filter = ('circuito','criado_em')
-    search_fields = ('nome', 'coordenador', 'email_coordenador','circuito', 'encarregado')
+    search_fields = ('nome', 'coordenador', 'endereco', 'email_coordenador','circuito')
     list_per_page = 10;    
 
 class ResponsavelAdmin(admin.ModelAdmin):
@@ -36,16 +38,28 @@ class ResponsavelAdmin(admin.ModelAdmin):
     search_fields = ('foto','nome','tipo','congregacao','email','telefone')
     list_per_page = 10;    
 
+class CapitaoAdmin(admin.ModelAdmin):
+    model = Capitao
+    date_hierarchy = 'criado_em'
+    list_display = ('nome','congregacao','telefone1','telefone2')
+    list_filter = ('congregacao','criado_em')
+    search_fields = ('nome','congregacao','telefone1','telefone2')
+    list_per_page = 10;    
+
+class PassageiroAdmin(admin.ModelAdmin):
+    model = Passageiro
+    date_hierarchy = 'criado_em'
+    list_display = ('nome','congregacao','rg_cpf','capitao','crianca_colo')
+    list_filter = ('congregacao','capitao')
+    search_fields = ('nome','congregacao','rg_cpf','capitao','crianca_colo')
+    list_per_page = 10;    
+
 
 admin.site.register(Eventos, EventoAdmin)
 admin.site.register(Congregacao, CongregacaoAdmin)
 admin.site.register(Circuito, CircuitoAdmin)
 admin.site.register(Responsavel, ResponsavelAdmin)
+admin.site.register(Capitao, CapitaoAdmin)
+admin.site.register(Passageiro, PassageiroAdmin)
 admin.site.site_header = 'iOnibus - Painel Administrativo'
-
-
-
-
-
-
 

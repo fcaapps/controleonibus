@@ -53,14 +53,15 @@
                   <ul class="dropdown-menu">
                     <li><a href="{% url 'ionibus:ionibus.add_eventos' %}">Cadastro de Eventos</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="{% url 'ionibus:congregacao_cadastro' %}">Cadastro de Congregações</a></li>
+                    <li><a href="{% url 'ionibus:ionibus.add_congregacao' %}">Cadastro de Congregações</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="{% url 'ionibus:responsaveis' %}">Cadastro dos Responsaveis</a></li>
-                    <li><a href="{% url 'ionibus:capitaes' %}">Cadastro de Capitães</a></li>
-                    <li><a href="{% url 'ionibus:passageiros' %}">Cadastro de Passageiros</a></li>
+                    <li><a href="{% url 'ionibus:ionibus.add_responsavel' %}">Cadastro dos Responsaveis</a></li>
+                    <li><a href="{% url 'ionibus:ionibus.add_capitao' %}">Cadastro de Capitães</a></li>
+                    <li><a href="{% url 'ionibus:ionibus.add_passageiro' %}">Cadastro de Passageiros</a></li>
                     <li role="separator" class="divider"></li>
                   </ul>
                 </li>
+                <li><a href="#">Lista de Passageiros</a></li>                
                 {% if user.is_authenticated %}
                   <li><a href="{% url 'accounts:logout' %}">Sair</a></li>
                 {% else %}

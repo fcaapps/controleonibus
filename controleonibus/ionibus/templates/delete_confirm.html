@@ -66,6 +66,78 @@
 
         {% endif %}
 
+        <!--Resumo Responsavel-->
+        {% if opcao == 'Responsavel' %}
+        <ul>
+                <li>Nome: {{ object.nome}}</li>
+                <li>Tipo: {{ object.tipo }}</li>
+                <li>Congregação: {{ object.congregacao }}</li>
+                <li>E-mail: {{ object.email }}</li>
+                <li>Telefone: {{ object.telefone }}</li>
+
+        </ul>
+
+        <button type="submit" class="btn btn-danger" style="width:170px">
+            <!--<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>-->
+            <h5>Sim, tenho certeza</h5>
+        </button>
+
+        <a class="btn btn-success" href="{% url 'ionibus:responsavel_consulta' %}" style="width:170px">
+            <!--<span class="glyphicon glyphicon-arrow" aria-hidden="true"></span>-->
+            <h5>Não, me leve de volta </h5>
+        </a>
+
+        {% endif %}
+
+
+        <!--Resumo Capitão-->
+        {% if opcao == 'Capitao' %}
+        <ul>
+                <li>Nome: {{ object.nome}}</li>
+                <li>Congregação: {{ object.congregacao }}</li>
+                <li>Encarregado: {{ object.responsavel }}</li>
+                <li>E-mail: {{ object.email }}</li>
+                <li>Telefone 1: {{ object.telefone1 }}</li>
+                <li>Telefone 2: {{ object.telefone2 }}</li>
+
+        </ul>
+
+        <button type="submit" class="btn btn-danger" style="width:170px">
+            <!--<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>-->
+            <h5>Sim, tenho certeza</h5>
+        </button>
+
+        <a class="btn btn-success" href="{% url 'ionibus:capitao_consulta' %}" style="width:170px">
+            <!--<span class="glyphicon glyphicon-arrow" aria-hidden="true"></span>-->
+            <h5>Não, me leve de volta </h5>
+        </a>
+
+        {% endif %}
+
+
+        <!--Resumo Passageiro-->
+        {% if opcao == 'Passageiro' %}
+        <ul>
+                <li>Nome: {{ object.nome}}</li>
+                <li>Congregação: {{ object.congregacao }}</li>
+                <li>Rg/Cpf: {{ object.rg_cpf }}</li>
+                <li>Capitão: {{ object.capitao }}</li>
+                <li>Criança de Colo: {{ object.crianca_colo }}</li>
+        </ul>
+
+        <button type="submit" class="btn btn-danger" style="width:170px">
+            <!--<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>-->
+            <h5>Sim, tenho certeza</h5>
+        </button>
+
+        <a class="btn btn-success" href="{% url 'ionibus:passageiro_consulta' %}" style="width:170px">
+            <!--<span class="glyphicon glyphicon-arrow" aria-hidden="true"></span>-->
+            <h5>Não, me leve de volta </h5>
+        </a>
+
+        {% endif %}
+
+
         <br/>
 
     </form>
