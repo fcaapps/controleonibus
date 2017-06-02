@@ -5,8 +5,8 @@ from controleonibus.ionibus.models import Congregacao
 from controleonibus.ionibus.models import Responsavel
 from controleonibus.ionibus.models import Capitao
 from controleonibus.ionibus.models import Passageiro
-from bootstrap3_datetime.widgets import DateTimePicker
-from datetimewidget.widgets import DateWidget
+# from bootstrap3_datetime.widgets import DateTimePicker
+# from datetimewidget.widgets import DateWidget
 
 class EventosForm(ModelForm):
     class Meta:
