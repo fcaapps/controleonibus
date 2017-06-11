@@ -18,10 +18,10 @@
       <!--Bootstrap Snippet Login-->
     <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
 
+    {{ form.media }}
   </head>
 
   <body>
-
     <div class="container">
       <br/>
 
@@ -61,7 +61,7 @@
                     <li role="separator" class="divider"></li>
                   </ul>
                 </li>
-                <li><a href="#">Lista de Passageiros</a></li>                
+                <li><a href="{% url 'ionibus:ionibus.add_lista_passageiros' %}">Lista de Passageiros</a></li>                
                 {% if user.is_authenticated %}
                   <li><a href="{% url 'accounts:logout' %}">Sair</a></li>
                 {% else %}

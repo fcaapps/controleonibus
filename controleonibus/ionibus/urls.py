@@ -11,6 +11,8 @@ urlpatterns = [
     url(r'^cadastro_responsavel/$', views.responsavel_cadastro, name="ionibus.add_responsavel"),
     url(r'^cadastro_capitao/$', views.capitao_cadastro, name="ionibus.add_capitao"),
     url(r'^cadastro_passageiro/$', views.passageiro_cadastro, name="ionibus.add_passageiro"),    
+    url(r'^lista_passageiro/$', views.listapassageiro_cadastro, name="ionibus.add_lista_passageiros"),    
+    
     # Consultas
     url(r'^consulta_eventos/$', views.eventos_consulta, name="eventos_consulta"),
     url(r'^consulta_congregacao/$', views.congregacao_consulta, name="congregacao_consulta"),
@@ -23,6 +25,7 @@ urlpatterns = [
     url(r'^responsavel_update/(?P<pk>\d+)/$', views.responsavel_update, name="ionibus.change_responsavel"),    
     url(r'^capitao_update/(?P<pk>\d+)/$', views.capitao_update, name="ionibus.change_capitao"),        
     url(r'^passageiro_update/(?P<pk>\d+)/$', views.passageiro_update, name="ionibus.change_passageiro"),            
+    url(r'^listapassageiro_update/(?P<pk>\d+)/$', views.lista_passageiro_update, name="ionibus.change_lista_passageiros"),                
     # Deletes
     url(r'^eventos_delete/(?P<pk>\d+)/$', views.eventos_delete, name="ionibus.delete_eventos"),
     url(r'^congregacao_delete/(?P<pk>\d+)/$', views.congregacao_delete, name="ionibus.delete_congregacao"),

@@ -8,7 +8,6 @@
             <tr class="info">
                 <td><b>Tipo</b></td>
                 <td><b>Circuito</b></td>
-                <td><b>Parte</b></td>
                 <td><b>Data do Evento</b></td>
                 <td><b>Texto Base</b></td>
                 <td><b>Alterar</b></td>
@@ -30,8 +29,7 @@
                     {% endif %}
 
                     <td style="vertical-align:middle">{{evento.circuito}}</td>
-                    <td style="vertical-align:middle">{{evento.parte}}</td>
-                    <td style="vertical-align:middle">{{evento.data_evento}}</td>
+                    <td style="vertical-align:middle">{{evento.data_evento | date:'d/m/Y'}}</td>
                     <td style="vertical-align:middle">{{evento.texto_base}}</td>
 
                     <td style="vertical-align:middle">

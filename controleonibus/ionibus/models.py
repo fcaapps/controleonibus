@@ -3,6 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.conf import settings
+import datetime
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
@@ -76,7 +77,7 @@ class Eventos(models.Model):
 
 
     tipo = models.CharField('Tipo', max_length=2, choices=TIPO_EVENTO)
-    data_evento = models.DateField(
+    data_evento = models.DateTimeField(
         'Data do Evento', null=True, blank=True
     )
     # circuito = models.CharField('Circuito', max_length=4, choices=CIRCUITO, blank=True)
@@ -93,12 +94,13 @@ class Eventos(models.Model):
 
     def __str__(self):
 
+
         if self.tipo == 'AC':
-            return 'Assemb. de Circuito' + ' - ' + self.data_evento.strftime('%d/%m/%Y')
+            return 'Tipo: Assemb. de Circuito' + ' - Data do Evento: ' + str(self.data_evento.strftime('%d/%m/%Y'))
         if self.tipo == 'AE':
-            return 'Assemb. Especial' + ' - ' + self.data_evento.strftime('%d/%m/%Y')
+            return 'Tipo: Assemb. Especial' + ' - Data do Evento: ' + str(self.data_evento.strftime('%d/%m/%Y'))
         if self.tipo == 'CR':
-            return 'Cong. Regional' + ' - ' + self.data_evento.strftime('%d/%m/%Y')
+            return 'Tipo: Cong. Regional' + ' - Data do Evento:' + str(self.data_evento.strftime('%d/%m/%Y'))
 
 
 class Congregacao(models.Model):
@@ -180,4 +182,51 @@ class Passageiro(models.Model):
         verbose_name_plural = 'Passageiro'          
 
     def __str__(self):
-        return self.nome
+        return self.nome + ' - ' + self.rg_cpf
+
+
+class Onibus_assentos(models.Model):    
+    evento = models.ForeignKey('ionibus.eventos', related_name='fk_eve_onibus_assentos', null=True, blank=True)
+    congregacao = models.ForeignKey('ionibus.congregacao', related_name='fk_cong_onibus_assentos', null=True, blank=True)
+    qt_onibus = models.IntegerField('Qt. Ônibus')
+    qt_assentos = models.IntegerField('Qt. Assentos')
+    valor_passagem = models.DecimalField('Qt. Assentos', max_digits=10, decimal_places=2)
+    
+    class Meta: 
+        verbose_name_plural = 'Ônibus Assentos'          
+
+    def __str__(self):
+        return self.evento + ' - ' + self.congregacao + ' - Qt.O: ' + self.qt_onibus + ' - Qt.A: ' + self.qt_assentos
+
+class Lista_passageiros(models.Model):    
+    PAGO = (
+        ('S', 'Sim'),                
+        ('N', 'Não'),
+    )
+
+    data_arranjo = models.DateField(
+        'Data do Arranjo', null=True, blank=True
+    )
+    evento = models.ForeignKey('ionibus.eventos', related_name='fk_eve_lista_passageiros', null=True, blank=True)
+    congregacao = models.ForeignKey('ionibus.congregacao', related_name='fk_cong_lista_passageiros')
+    endereco_primeira_parada = models.CharField('Primeira parada', max_length=200)
+    endereco_segunda_parada = models.CharField('Segunda parada', max_length=200)
+    endereco_terceira_parada = models.CharField('Terceira parada', max_length=200)
+    capitao = models.ForeignKey('ionibus.capitao', related_name='fk_cap_lista_passageiros')    
+    onibus = models.ForeignKey('ionibus.onibus_assentos', related_name='fk_onibus_a_lista_passageiros', null=True, blank=True)    
+    passageiro = models.ForeignKey('ionibus.passageiro', related_name='fk_passa_lista_passageiros')    
+    pago = models.CharField('Pago', max_length=1, default='N', choices=PAGO)        
+
+    class Meta: 
+        verbose_name_plural = 'Lista de Passageiros'          
+
+    def __str__(self):
+        return self.congregacao + ' - ' + self.data_arranjo.strftime('%d/%m/%Y') + ' - ' + self.passageiro
+
+class Pagamentos(models.Model):
+    lista = models.ForeignKey('ionibus.lista_passageiros', related_name='fk_lista_pagamentos')    
+    data_pgto = models.DateField(
+        'Data do Pagto', null=True, blank=True
+    )
+    valor_pago = models.DecimalField('Qt. Pago', max_digits=10, decimal_places=2)
+

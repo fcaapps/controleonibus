@@ -5,11 +5,13 @@ from controleonibus.ionibus.models import Congregacao
 from controleonibus.ionibus.models import Responsavel
 from controleonibus.ionibus.models import Capitao
 from controleonibus.ionibus.models import Passageiro
+from controleonibus.ionibus.models import Lista_passageiros
 from controleonibus.ionibus.forms import EventosForm
 from controleonibus.ionibus.forms import CongregacaoForm
 from controleonibus.ionibus.forms import ResponsavelForm
 from controleonibus.ionibus.forms import CapitaoForm
 from controleonibus.ionibus.forms import PassageiroForm
+from controleonibus.ionibus.forms import ListaPassageiroForm
 from controleonibus.tasks.serializers import EventosTaskSerializer
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
@@ -501,6 +503,101 @@ def passageiro_consulta(request):
         passageiro = paginator.page(paginator.num_pages)
 
     return render(request, 'consultas_de_cadastro.html', context)
+
+
+# Cadastro de Lista de Passageiros
+@login_required
+def listapassageiro_cadastro(request):
+    form = ListaPassageiroForm(request.POST or None)
+    lista_passageiro = Lista_passageiros.objects.all()
+
+    urlName = resolve(request.path).url_name
+
+    opcao = 'ListaPassageiro'
+
+    context = {
+        'lista_passageiro': lista_passageiro,    
+        'form': form,
+        'opcao': opcao,
+    }
+
+    if not request.user.has_perm(urlName):
+        return redirect('/sem_permissao/')
+
+    if form.is_valid():
+        form.save()
+
+    return render(request, 'cadastros.html', context)
+
+# Altera Lista de Passageiros
+@login_required
+def lista_passageiro_update(request,pk):
+    lista_passageiro = Lista_passageiros.objects.get(pk=pk)
+    form = ListaPassageiroForm(request.POST or None, instance=Lista_passageiros)
+    urlName = resolve(request.path).url_name
+
+    opcao = 'lista_passageiro'
+
+    context = {
+        'object': Lista_passageiros,
+        'form': form,
+        'opcao': opcao,
+    }
+
+    if not request.user.has_perm(urlName):
+        return redirect('/sem_permissao/')
+
+    if form.is_valid():
+        form.save()
+
+    return render(request, 'cadastros.html', context)
+
+# # Deleta Passageiros
+# @login_required
+# def passageiro_delete(request, pk):
+#     passageiro = Passageiro.objects.get(pk=pk)
+#     urlName = resolve(request.path).url_name
+
+#     opcao = 'Passageiro'
+
+#     context = {
+#         'object': passageiro,
+#         'opcao': opcao,
+#     }
+
+#     if not request.user.has_perm(urlName):
+#         return redirect('/sem_permissao/')
+
+#     if request.method=='POST':
+#         passageiro.delete()
+#         return redirect('/consulta_passageiro/')
+#     return render(request, 'delete_confirm.html', context)
+
+# # Consulta Passageiro com Paginador
+# @login_required
+# def passageiro_consulta(request):
+#     passageiro_lista = Passageiro.objects.all()
+#     paginator = Paginator(passageiro_lista, 100)  # Show 25 contacts per page
+
+#     opcao = 'Passageiro'
+
+#     context = {
+#         'passageiro': passageiro_lista,
+#         'opcao': opcao,
+#     }
+
+#     page = request.GET.get('page')
+#     try:
+#         passageiro = paginator.page(page)
+#     except PageNotAnInteger:
+#         # If page is not an integer, deliver first page.
+#         passageiro = paginator.page(1)
+#     except EmptyPage:
+#         # If page is out of range (e.g. 9999), deliver last page of results.
+#         passageiro = paginator.page(paginator.num_pages)
+
+#     return render(request, 'consultas_de_cadastro.html', context)
+
 
 #
 # R E L A T Ó R I O S 

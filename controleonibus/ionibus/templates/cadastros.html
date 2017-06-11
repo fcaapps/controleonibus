@@ -1,26 +1,44 @@
 {% extends "base.html" %}
 {% load bootstrap %}
+{% load bootstrap_tags %}
 {% block content %}
+{% load bootstrap3 %}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
     <!-- Cadastro de Eventos -->
     {% if opcao == 'Eventos' %}
         <div class="alert alert-info" role="alert"><strong>>> Cadastro de {{ opcao }}</strong></div>
         <form method="post">
             {% csrf_token %}
-            {{form | bootstrap}}
-          <div align="left">
-              <button type="submit" class="btn btn-primary" style="width:150px">
-                  <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
-                  Cadastrar
-              </button>
-              <a class="btn btn-success" href="{% url 'ionibus:eventos_consulta'%}" style="width:150px">
-                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                  Consultar
-              </a>
-              <a class="btn btn-info" href="{% url 'ionibus:painel'%}" style="width:150px">
-                  <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                  Sair
-              </a>
-          </div>
+            <!-- {% bootstrap_form form %} -->
+            <br/>
+            <div class="row"> 
+              <div class="col-md-3">{% bootstrap_field form.tipo %}</div>            
+              <div class="col-md-3">{% bootstrap_field form.data_evento %}</div>            
+              <div class="col-md-3">{% bootstrap_field form.circuito %}</div>                        
+              <div class="col-md-3">{% bootstrap_field form.texto_base %}</div>
+              <div class="col-md-3">{% bootstrap_field form.local %}</div>                                    
+              <div class="col-md-3">{% bootstrap_field form.status_evento %}</div>                                    
+            </div>  
+            <br/>
+            <br/>
+            <legend></legend>
+            <div class="col-md-12" align="center">
+                <button type="submit" class="btn btn-primary" style="width:150px">
+                    <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                    Cadastrar
+                </button>
+                <a class="btn btn-success" href="{% url 'ionibus:eventos_consulta'%}" style="width:150px">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    Consultar
+                </a>
+                <a class="btn btn-info" href="{% url 'ionibus:painel'%}" style="width:150px">
+                    <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                    Sair
+                </a>
+            </div>
         </form>
     {% endif %}
 
@@ -115,6 +133,182 @@
           </div>
         </form>
     {% endif %}
+
+
+    <!-- Cadastro de Lista de Passageiros -->
+    {% if opcao == 'ListaPassageiro' %}
+        <div class="alert alert-info" role="alert"><strong>>> Lista de Passageiros</strong></div>
+        <form class="form-inline" method="post" >
+          <legend></legend>        
+          <div class="row">
+            <div class="col-md-12">
+              {% csrf_token %}
+              {{ form|bootstrap }}
+            </div>                        
+          </div>
+          <div class="row">
+            <div class="col-md-12" align="right">
+                <button type="submit" class="btn btn-primary" style="width:50px">
+                    <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                </button>
+                <a class="btn btn-success" href="{% url 'ionibus:passageiro_consulta'%}" style="width:50px">
+                    <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                </a>
+            </div>            
+          </div>  
+        </form>
+        <br/>
+        <legend></legend>
+
+        <table class="table table-condensed">
+
+            <tr class="info">
+                <td><b>Passageiro</b></td>
+                <td><b></b></td>               
+                <td><b></b></td>                
+                <td><b></b></td>                                                 
+                <td><b></b></td>               
+                <td><b></b></td>                
+                <td><b></b></td>                                                 
+                <td><b></b></td>               
+                <td><b></b></td>                
+                <td><b></b></td>                                                 
+                <td><b></b></td>               
+                <td><b></b></td>                
+                <td><b></b></td>    
+                <td><b></b></td>               
+                <td><b></b></td>                
+                <td><b></b></td>                                                 
+                <td><b></b></td>               
+                <td><b></b></td>                
+                <td><b></b></td>                                                 
+                <td><b></b></td>               
+                <td><b></b></td>                
+                <td><b></b></td>                                                 
+                <td><b></b></td>               
+                <td><b></b></td>                
+                <td><b></b></td>                                                 
+                <td><b></b></td>               
+                <td><b></b></td>                
+                <td><b></b></td>                                                 
+                <td><b></b></td>               
+                <td><b></b></td>                
+                <td><b></b></td>                                                 
+                <td><b></b></td>               
+                <td><b></b></td>                
+                <td><b></b></td>                                                 
+                <td><b></b></td>               
+                <td><b></b></td>                
+                <td><b></b></td>    
+                <td><b></b></td>               
+                <td><b></b></td>                
+                <td><b></b></td>                                                 
+                <td><b></b></td>               
+                <td><b></b></td>                
+                <td><b></b></td>                                                 
+                <td><b></b></td>               
+                <td><b></b></td>                
+                <td><b></b></td>                                                 
+                <td><b></b></td>               
+                <td><b></b></td>                
+                <td><b></b></td>                                                                 
+                <td><b>Pago</b></td>
+                <td><b></b></td>               
+                <td><b></b></td>                
+                <td><b></b></td>                                                 
+                <td><b></b></td>               
+                <td><b>Ver Pgto</b></td>
+                <td><b>Excluir</b></td>                
+
+            </tr>
+
+            {% for listapass in lista_passageiro %}
+
+                <tr>
+                    <td style="vertical-align:middle">{{listapass.passageiro}}</td>
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>    
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>  
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>    
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>  
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>    
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>  
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>    
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                                                        
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>    
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>  
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>    
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>  
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>    
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>  
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>    
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                                                      
+                    {% if listapass.pago == 'S' %}
+                       <td style="vertical-align:middle">Sim</td>
+                    {% endif %}
+                    {% if listapass.pago == 'N' %}
+                       <td style="vertical-align:middle">Não</td>
+                    {% endif %}                    
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>    
+                    <td style="vertical-align:middle"></td>                
+                    <td style="vertical-align:middle"></td>                                    
+                    <td style="vertical-align:middle">
+                        <a class="btn btn-success" href="#">
+                            <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                        </a>
+                    </td>               
+                    {% if opcao == 'lista_passageiro_update' %}
+                    <td style="vertical-align:middle">
+                        <a class="btn btn-success" href="{% url 'ionibus:passageiro_consulta'%}">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </a>
+                    </td>          
+                    {% endif %}                             
+                    <td style="vertical-align:middle">
+                        <a class="btn btn-danger" href="#">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </a>
+                    </td>     
+
+                </tr>
+            {% endfor %}
+        </table>       
+
+    {% endif %}    
+
+
 
     <br/>
 {% endblock %}
