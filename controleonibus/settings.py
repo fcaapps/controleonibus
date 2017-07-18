@@ -43,8 +43,7 @@ DEFAULT_APPS = [
     'bootstrap3',
     'bootstrapform',
     'controleonibus.tasks',    
-    'django_forms_bootstrap',
-    'datetimewidget'    
+    'django_forms_bootstrap'    
 ]
 
 THIRD_PARTY_APPS = [
