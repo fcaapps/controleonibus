@@ -40,8 +40,8 @@ DEFAULT_APPS = [
     'django.contrib.staticfiles',
     'controleonibus.ionibus',
     'controleonibus.accounts',
-    'bootstrap3',
     'bootstrapform',
+    'bootstrap3',
     'controleonibus.tasks',    
     'django_forms_bootstrap'    
 ]
